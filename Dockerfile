@@ -19,6 +19,11 @@ RUN apt-get update && apt-get install -y \
 # 启用 Apache rewrite
 RUN a2enmod rewrite
 
+# ⭐ 设置 Apache 指向 Laravel public 目录
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
+
 # 安装 Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
@@ -42,13 +47,3 @@ EXPOSE 10000
 CMD sed -i "s/80/${PORT}/g" /etc/apache2/ports.conf \
  && sed -i "s/:80/:${PORT}/g" /etc/apache2/sites-available/000-default.conf \
  && apache2-foreground
-
-
-# 生成 APP_KEY
-# RUN php artisan key:generate
-
-# # 设置 Apache 指向 Laravel public
-# RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
-
-# # 开放端口
-# EXPOSE 80
