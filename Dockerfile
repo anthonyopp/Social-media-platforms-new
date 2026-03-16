@@ -1,10 +1,10 @@
-# 使用 PHP 8.2 Apache 官方镜像
+# 使用官方 PHP Apache 镜像
 FROM php:8.2-apache
 
 # 设置工作目录
 WORKDIR /var/www/html
 
-# 安装系统依赖
+# 安装系统依赖和 PHP 扩展
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -25,18 +25,18 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 # 复制 Laravel 项目文件
 COPY . /var/www/html
 
-# 设置文件权限
+# 设置权限
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 storage bootstrap/cache
 
-# 安装 Laravel 依赖
+# 安装 Laravel 依赖（build 阶段）
 RUN composer install --no-dev --optimize-autoloader --prefer-dist --no-interaction
 
-# 缓存配置和路由
+# 缓存配置和路由，提高性能
 RUN php artisan config:cache
 RUN php artisan route:cache
 
-# 生成 Laravel APP KEY
+# 生成 APP_KEY
 RUN php artisan key:generate
 
 # 设置 Apache 指向 Laravel public
