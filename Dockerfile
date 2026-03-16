@@ -1,3 +1,4 @@
+# 使用 PHP 8.2 Apache 官方镜像
 FROM php:8.2-apache
 
 # 设置工作目录
@@ -12,7 +13,8 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     zip \
     curl \
-    && docker-php-ext-install pdo pdo_mysql mbstring exif bcmath intl zip
+    && docker-php-ext-install pdo pdo_mysql mbstring exif bcmath intl zip \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # 启用 Apache rewrite
 RUN a2enmod rewrite
@@ -23,7 +25,7 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 # 复制 Laravel 项目文件
 COPY . /var/www/html
 
-# 设置权限
+# 设置文件权限
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 storage bootstrap/cache
 
