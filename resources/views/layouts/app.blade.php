@@ -74,10 +74,19 @@
     <!-- 导航栏 -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand translate-text" href="{{ route('home') }}">Home</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
+            <img src="/images/123.png" alt="Logo"
+            style="height:50px; margin-right:10px; filter: drop-shadow(0 0 6px #4fd1ff);">
+
+        </a>
+
+        <a class="nav-link translate-text" href="{{ route('home') }}">
+            Home
+        </a>
+
+            {{-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
-            </button>
+            </button> --}}
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
