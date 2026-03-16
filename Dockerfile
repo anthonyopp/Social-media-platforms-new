@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     zip \
     curl \
-    && docker-php-ext-install pdo pdo_mysql mbstring exif bcmath intl zip \
+    && docker-php-ext-install pdo_mysql mbstring zip \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # 启用 Apache rewrite
