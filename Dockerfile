@@ -38,8 +38,8 @@ RUN chown -R www-data:www-data /var/www/html \
 RUN composer install --no-dev --optimize-autoloader --prefer-dist --no-interaction
 
 # 缓存配置和路由，提高性能
-RUN php artisan config:cache
-RUN php artisan route:cache
+# RUN php artisan config:cache
+# RUN php artisan route:cache
 
 ENV PORT=10000
 EXPOSE 10000
