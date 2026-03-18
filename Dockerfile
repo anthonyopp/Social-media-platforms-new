@@ -37,12 +37,8 @@ RUN chown -R www-data:www-data /var/www/html \
 # 安装 Laravel 依赖（build 阶段）
 RUN composer install --no-dev --optimize-autoloader --prefer-dist --no-interaction
 
-# 缓存配置和路由，提高性能
-# RUN php artisan config:cache
-# RUN php artisan route:cache
-
 ENV PORT=10000
-EXPOSE 10000
+EXPOSE ${PORT}
 
 CMD sed -i "s/80/${PORT}/g" /etc/apache2/ports.conf \
  && sed -i "s/:80/:${PORT}/g" /etc/apache2/sites-available/000-default.conf \
